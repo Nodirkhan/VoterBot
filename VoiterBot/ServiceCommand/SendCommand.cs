@@ -28,9 +28,14 @@ namespace VoterBot.ServiceCommand
             await _manager.Invoke(_client, message.Chat.Id);
         }
 
-        /*public async Task GetCallbackQuery_SetCommand(CallbackQuery query)
+        public async Task GetCallbackQuery_SetCommand(CallbackQuery query)
         {
+            _command = await _tableCommand.GetCommandForCallbackQuery(query);
+            if (_command == null) 
+                return;
 
-        }*/
+            _manager.SetCommand(_command);
+            await _manager.Invoke(_client, query.From.Id);
+        }
     }
 }

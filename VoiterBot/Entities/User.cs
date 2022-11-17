@@ -14,9 +14,13 @@ namespace VoterBot.Entities
 
         public string FullName { get; set; }
 
-        public Language Language { get; set; } = Language.Uz;
+        public Language Language { get; set; }
 
         public int VoterNumber { get; set; }
+
+        public string ContactNumber { get; set; }
+
+        public bool IsSubscriber { get; set; } = false;
 
         public int? MajorId { get; set; }
         public Major Major { get; set; }

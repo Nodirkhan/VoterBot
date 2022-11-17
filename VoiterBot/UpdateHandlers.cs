@@ -46,7 +46,8 @@ namespace VoterBot
         }
         private static async Task BotOnCallBackQueryReceived(ITelegramBotClient botclient, CallbackQuery callbackQuery)
         {
-
+            await new SendCommand(botclient)
+                .GetCallbackQuery_SetCommand(callbackQuery);  
         }
 
     }

@@ -17,14 +17,14 @@ namespace VoterBot.Entities
             new Channel
             {
                 Id = 10,
-                Name = "Birinchi kanal",
-                Link = "t.me//Nodir_khan"
+                Name = "Channel: e-gov.uz 🔑",
+                Link = "tva3gallery"
             },
             new Channel
             {
-                Id = 20,
-                Name = "Ikkinchi kanal",
-                Link = "t.me//TestSinovBotUchun"
+                Id = 10,
+                Name = "Channel: my.gov.uz 🔑",
+                Link = "testVoterChannel"
             }
         };
     }

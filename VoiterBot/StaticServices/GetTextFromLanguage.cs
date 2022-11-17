@@ -6,6 +6,7 @@ namespace VoterBot.StaticServices
 {
     public static class GetTextFromLanguage
     {
+
         public static string GetText(Language language, BotResponseText data)
         {
             return language switch
