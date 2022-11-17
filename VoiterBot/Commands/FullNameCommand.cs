@@ -9,12 +9,18 @@ namespace VoterBot.Commands
 {
     public class FullNameCommand : Command
     {
-        private UserRepositoryAsync _userRepository;
-        private BotResponseRepositoryAsync _botResponse;
+        private UserRepositoryAsync userRepository;
+        private BotResponseRepositoryAsync botResponseRepository;
 
+        public override void SetRequestParams(RequestParams requestParams)
+        {
+            _requestParams = requestParams;
+            userRepository = new UserRepositoryAsync();
+            botResponseRepository = new BotResponseRepositoryAsync();
+        }
         public override async Task Execute(ITelegramBotClient client, long userId)
         {
-            await _userRepository.Update(_requestParams.User);
+            await userRepository.Update(_requestParams.User);
 
             ///Call SendContactCommand
             ///

@@ -13,7 +13,15 @@ namespace VoterBot.Commands
 {
     public class ModifiedLanguageCommand : Command
     {
-        
+        private UserRepositoryAsync userRepository;
+        private BotResponseRepositoryAsync botResponseRepository;
+
+        public override void SetRequestParams(RequestParams requestParams)
+        {
+            _requestParams = requestParams;
+            userRepository = new UserRepositoryAsync();
+            botResponseRepository = new BotResponseRepositoryAsync();
+        }
         public override async Task Execute(ITelegramBotClient client, long userId)
         {
             _requestParams.User.Language = _requestParams.CallbackData switch
@@ -24,22 +32,18 @@ namespace VoterBot.Commands
                 _ => Language.Uz
             };
 
-            await _requestParams.userRepository.Update(_requestParams.User);
+            await userRepository.Update(_requestParams.User);
 
-            await client.DeleteMessageAsync(
-                _requestParams.Chat,
-                _requestParams.MessageId
-                );
-
-            var botData = await _requestParams.botResponseRepository
+            var botData = await botResponseRepository
                 .FindByCodition(b => b.Type == ResponseTextType.Done);
 
             _requestParams.text = GetTextFromLanguage.GetText(_requestParams.User.Language, botData);
 
-            #region Call Other Command
-            /// Call to keyboard button
-
-            #endregion
+                await client.EditMessageTextAsync(
+                    chatId:userId,
+                    messageId: _requestParams.MessageId,
+                    text: _requestParams.text
+                    );
 
             if (!_requestParams.User.IsSubscriber)
             {
@@ -48,6 +52,17 @@ namespace VoterBot.Commands
                 command.SetRequestParams(_requestParams);
                 await command.Execute(client, userId);
             }
+            else
+            {
+                _requestParams.text = string.Empty;
+                var command = CommandFactory
+                    .GetCommand(CommandFactory.CommandWords.KEYBOARDBUTTON);
+
+                command.SetRequestParams(_requestParams);
+                await command.Execute(client, userId);
+            }
+
+
 
         }
     }

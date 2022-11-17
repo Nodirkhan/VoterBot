@@ -31,13 +31,25 @@ namespace VoterBot
             CancellationToken cancellationToken)
         {
 
-            var handler = update.Type switch
+            
+            try
             {
-                UpdateType.Message => BotOnMessageReceived(botClient, update.Message!),
-                UpdateType.CallbackQuery => BotOnCallBackQueryReceived(botClient, update.CallbackQuery!),
-                _ => null
-            };
-            await handler;
+                var handler = update.Type switch
+                {
+                    UpdateType.Message => BotOnMessageReceived(botClient, update.Message!),
+                    UpdateType.CallbackQuery => BotOnCallBackQueryReceived(botClient, update.CallbackQuery!),
+                    _ => null
+                };
+                if (handler is null)
+                    return;
+
+                await handler;
+            }
+            catch(Exception ex)
+            {
+
+                Console.WriteLine($"Error: {ex}");
+            }
         }
         private static async Task BotOnMessageReceived(ITelegramBotClient botClient, Message message)
         {

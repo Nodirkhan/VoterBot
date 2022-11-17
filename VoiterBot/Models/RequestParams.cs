@@ -10,7 +10,5 @@ namespace VoterBot.Models
         public int MessageId { get; set; }
         public Chat Chat { get; set; }
         public string text { get; set; }
-        public UserRepositoryAsync userRepository { get; set; }
-        public BotResponseRepositoryAsync botResponseRepository { get; set; }
     }
 }

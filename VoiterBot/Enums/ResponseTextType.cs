@@ -9,6 +9,9 @@
         Verify = 50,
         UnSubscribe = 60,
         FullName = 70,
-        Contact = 80
+        Contact = 80,
+        Comment = 90,
+        AcceptedComment = 100,
+        KeyBoard = 110
     }
 }

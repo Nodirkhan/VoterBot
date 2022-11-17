@@ -29,6 +29,10 @@ namespace VoterBot.ServiceCommand
             _commands.Add(CommandWords.FULLNAME, new FullNameCommand());
             _commands.Add(CommandWords.CONTACT, new SendContactCommand());
             _commands.Add(CommandWords.MODIFY_CONTACT, new ModifyConactCommand());
+            _commands.Add(CommandWords.ACCEPTED_COMMENT, new CommentCommand());
+            _commands.Add(CommandWords.KEYBOARDBUTTON, new SendKeyBoardButton());
+            _commands.Add(CommandWords.CHANGE_LANGUAGE, new ShowLanguageCommand());
+            _commands.Add(CommandWords.PERSONAL_NUMBER, new PersonalNumberCommand());
 
             return _commands;
         }
@@ -45,6 +49,11 @@ namespace VoterBot.ServiceCommand
             public const string FULLNAME = "FullName";
             public const string CONTACT = "Contact";
             public const string MODIFY_CONTACT = "Modify_Contact";
+            public const string ACCEPTED_COMMENT = "Accepted_Comment";
+            public const string KEYBOARDBUTTON = "KeyboardButton";
+            public const string CHANGE_LANGUAGE = "Tilni o'zgartirish";
+            public const string PERSONAL_NUMBER = "Shaxsiy raqam";
+            public const string DELETE_MESSAGE = "Delete_Message";
         }
     }
 }

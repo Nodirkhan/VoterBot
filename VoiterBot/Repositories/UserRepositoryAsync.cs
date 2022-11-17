@@ -7,21 +7,14 @@ namespace VoterBot.Repositories
 {
     public class UserRepositoryAsync
     {
-        private ApplicationDbContext _context;
-        private readonly DbSet<User> _users;
-
-        public UserRepositoryAsync(ApplicationDbContext context)
-        {
-            _context  = context ?? new ApplicationDbContext();
-            _users = context.Users;
-        }
 
         public async Task<User> CreateUserAsync(User user)
         {
             try
             {
-                await _users.AddAsync(user);
-                await _context.SaveChangesAsync();
+                var context = new ApplicationDbContext();
+                await context.Users.AddAsync(user);
+                await context.SaveChangesAsync();
                 return user;
             }
             catch
@@ -30,13 +23,17 @@ namespace VoterBot.Repositories
             }
         }
 
-        public async Task<User> GetById(long userId) =>
-            await _users.AsNoTracking().FirstOrDefaultAsync(u => u.UserId == userId);
+        public async Task<User> GetById(long userId)
+        {
+            var users = new ApplicationDbContext().Users;
+            return await users.AsNoTracking().FirstOrDefaultAsync(u => u.UserId == userId);
+        }
 
         public async Task Update(User user)
         {
-            _context.Entry(user).State = EntityState.Modified;
-            await _context.SaveChangesAsync();  
+            var context = new ApplicationDbContext();
+            context.Entry(user).State = EntityState.Modified;
+            await context.SaveChangesAsync();  
         }
 
     }

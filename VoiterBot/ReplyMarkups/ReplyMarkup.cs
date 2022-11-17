@@ -29,7 +29,7 @@ namespace VoterBot.ReplyMarkups
             {
                 rows.Add(new InlineKeyboardButton[]
                 {
-                    InlineKeyboardButton.WithUrl(channel.Name, "t.me//" + channel.Link)
+                    InlineKeyboardButton.WithUrl(channel.Name, "https://t.me//" + channel.Link)
                 });
             }
 
@@ -47,6 +47,33 @@ namespace VoterBot.ReplyMarkups
             {
                 KeyboardButton.WithRequestContact("Contact")
             });
+        }
+
+        public static IReplyMarkup SendKeyBoardButton(List<string> texts)
+        {
+            var rows = new List<KeyboardButton[]>();
+            var cols = new List<KeyboardButton>();
+            foreach (var text in texts)
+            {
+                if (cols.Count == 2)
+                {
+                    rows.Add(cols.ToArray());
+                    cols.Clear();
+                    cols.Add(text);
+                }
+                else
+                {
+                    cols.Add(new KeyboardButton(text));
+                }
+            }
+            if (cols.Count > 0)
+            {
+                rows.Add(cols.ToArray());
+            }
+            return new ReplyKeyboardMarkup(rows)
+            {
+                ResizeKeyboard = true
+            };
         }
     }
 }

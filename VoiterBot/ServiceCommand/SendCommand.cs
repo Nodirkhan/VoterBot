@@ -30,6 +30,7 @@ namespace VoterBot.ServiceCommand
 
         public async Task GetCallbackQuery_SetCommand(CallbackQuery query)
         {
+            _tableCommand.client = _client;
             _command = await _tableCommand.GetCommandForCallbackQuery(query);
             if (_command == null) 
                 return;

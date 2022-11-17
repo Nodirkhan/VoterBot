@@ -6,26 +6,33 @@ using Telegram.Bot.Types.Enums;
 using VoterBot;
 using VoterBot.Models;
 
-var bot = new TelegramBotClient(DefaultValues.TOKEN);
-
-var me = await bot.GetMeAsync();
-Console.Title = me.Username ?? "My awesome Bot";
-
-using var cts = new CancellationTokenSource();
-
-var receiverOptions = new ReceiverOptions()
+try
 {
-    AllowedUpdates = Array.Empty<UpdateType>(),
-    ThrowPendingUpdates = true,
-};
+    var bot = new TelegramBotClient(DefaultValues.TOKEN);
 
-bot.StartReceiving(updateHandler: UpdateHandlers.HandleUpdateAsync,
-                   pollingErrorHandler: UpdateHandlers.PollingErrorHandler,
-                   receiverOptions: receiverOptions,
-                   cancellationToken: cts.Token);
+    var me = await bot.GetMeAsync();
+    Console.Title = me.Username ?? "My awesome Bot";
 
-Console.WriteLine($"Start listening for @{me.Username}");
-Console.ReadLine();
+    using var cts = new CancellationTokenSource();
 
-cts.Cancel();
+    var receiverOptions = new ReceiverOptions()
+    {
+        AllowedUpdates = Array.Empty<UpdateType>()
+    };
 
+    bot.StartReceiving(updateHandler: UpdateHandlers.HandleUpdateAsync,
+                       pollingErrorHandler: UpdateHandlers.PollingErrorHandler,
+                       receiverOptions: receiverOptions,
+                       cancellationToken: cts.Token);
+
+    Console.WriteLine($"Start listening for @{me.Username}");
+    Console.ReadLine();
+
+    cts.Cancel();
+
+
+}
+catch (Exception ext)
+{
+
+}

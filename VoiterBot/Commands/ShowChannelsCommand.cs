@@ -11,15 +11,23 @@ namespace VoterBot.Commands
 {
     public class ShowChannelsCommand : Command
     {
+        private UserRepositoryAsync userRepository;
+        private BotResponseRepositoryAsync botResponseRepository;
+
+        public override void SetRequestParams(RequestParams requestParams)
+        {
+            _requestParams = requestParams;
+            userRepository = new UserRepositoryAsync();
+            botResponseRepository = new BotResponseRepositoryAsync();
+        }
         public override async Task Execute(ITelegramBotClient client, long userId)
         {
-
-            var botResponse = await _requestParams.botResponseRepository
+            var botResponse = await botResponseRepository
                 .FindByCodition(u => u.Type == ResponseTextType.Subscribe);
 
             var textforSend = GetTextFromLanguage.GetText(_requestParams.User.Language, botResponse);
 
-            var checkerButton = await _requestParams.botResponseRepository
+            var checkerButton = await botResponseRepository
                 .FindByCodition(u => u.Type == ResponseTextType.Verify);
 
             var buttontext = GetTextFromLanguage.GetText(_requestParams.User.Language, checkerButton);

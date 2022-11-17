@@ -18,13 +18,13 @@ namespace VoterBot.Entities
             {
                 Id = 10,
                 Name = "Channel: e-gov.uz 🔑",
-                Link = "tva3gallery"
+                Link = "eGovUz "
             },
             new Channel
             {
                 Id = 10,
                 Name = "Channel: my.gov.uz 🔑",
-                Link = "testVoterChannel"
+                Link = "MyGovUz"
             }
         };
     }
